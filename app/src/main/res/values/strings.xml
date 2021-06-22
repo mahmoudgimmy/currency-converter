@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Currency calculator</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="eur">EUR</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="add_new_currency">add new currency</string>
+    <string name="ok">Ok</string>
+    <string name="currency_rate">Currency rate</string>
+    <string name="currency_name">Currency name</string>
+</resources>
