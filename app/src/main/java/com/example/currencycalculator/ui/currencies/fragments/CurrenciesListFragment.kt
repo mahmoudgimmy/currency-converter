@@ -1,5 +1,6 @@
 package com.example.currencycalculator.ui.currencies.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.currencycalculator.data.local.CurrenciesRoomDatabase
-import com.example.currencycalculator.data.remote.ApiClient
 import com.example.currencycalculator.databinding.FragmentCurrenciesBinding
+import com.example.currencycalculator.ui.calculator.CalculatorActivity
+import com.example.currencycalculator.ui.currencies.activities.DataSourceFactory
 import com.example.currencycalculator.ui.currencies.adapters.CurrenciesListClicks
 import com.example.currencycalculator.ui.currencies.adapters.CurrencyAdapter
 import com.example.currencycalculator.ui.currencies.models.Currency
@@ -30,8 +31,7 @@ class CurrenciesListFragment : Fragment(), CurrenciesListClicks {
         viewModelFactory {
             CurrencyListViewModel(
                 CurrenciesRepository(
-                    currencyRemote = ApiClient.CURRENCY_REMOTE,
-                    currencyDao = CurrenciesRoomDatabase.getDatabase(requireContext()).currencyDao()
+                    DataSourceFactory(requireContext())
                 )
             )
         }
@@ -59,7 +59,7 @@ class CurrenciesListFragment : Fragment(), CurrenciesListClicks {
                     it.mode
                 )
                 is CurrenciesActivityViewState.NewCurrency -> currenciesFragmentViewModel.insertNewCurrency(
-                    it.currency
+                    it.currency, it.mode
                 )
             }
         })
@@ -73,10 +73,6 @@ class CurrenciesListFragment : Fragment(), CurrenciesListClicks {
                     binding.pbLoading.isVisible = false
                     currenciesAdapter.submitList(it.payload)
 
-                }
-                is CurrencyListViewState.FAILURE -> {
-                    binding.pbLoading.isVisible = false
-                    currenciesAdapter.submitList(it.payload)
                 }
             }
         })
@@ -99,6 +95,8 @@ class CurrenciesListFragment : Fragment(), CurrenciesListClicks {
     }
 
     override fun onCurrencyClicked(currency: Currency) {
-        currenciesFragmentViewModel.navigateToCalculator(requireContext(), currency)
+        startActivity(Intent(requireContext(), CalculatorActivity::class.java).apply {
+            putExtra(CalculatorActivity.SELECTED_CURRENCY, currency)
+        })
     }
 }

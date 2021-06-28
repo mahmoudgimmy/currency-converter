@@ -1,22 +1,18 @@
 package com.example.currencycalculator.ui.currencies.repos
 
-import androidx.annotation.WorkerThread
-import com.example.currencycalculator.data.remote.CurrencyRemote
-import com.example.currencycalculator.data.local.CurrencyDao
+import com.example.currencycalculator.ui.currencies.activities.DataSourceFactory
 import com.example.currencycalculator.ui.currencies.models.Currency
+import com.example.currencycalculator.ui.currencies.viewmodels.Mode
 
 class CurrenciesRepository(
-    private val currencyDao: CurrencyDao,
-    private val currencyRemote: CurrencyRemote
+    private val DataSourceFactory: DataSourceFactory
 ) {
 
-    suspend fun loadAllCurrenciesFromDataBase() = currencyDao.loadAllCurrencies()
+    suspend fun loadCurrency(mode: Mode): List<Currency> =
+        DataSourceFactory.getDataSource(mode).loadCurrency()
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insertCurrency(word: Currency) = currencyDao.insertNewCurrency(word)
-
-
-    suspend fun loadAllCurrenciesFromNetwork() = currencyRemote.getLatestCurrencies()
+    suspend fun insetCurrency(currency: Currency, mode: Mode) {
+        DataSourceFactory.getDataSource(mode).insertCurrency(currency)
+    }
 
 }

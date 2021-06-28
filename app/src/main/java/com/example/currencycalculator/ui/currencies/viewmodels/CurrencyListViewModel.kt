@@ -18,42 +18,15 @@ class CurrencyListViewModel(private val repository: CurrenciesRepository) : View
 
     fun loadAllCurrencies(mode: Mode) = viewModelScope.launch {
         _currencyList.value = CurrencyListViewState.LOADING
-
-        when (mode) {
-            is Mode.OFFLINE -> {
-                try {
-                    val result = repository.loadAllCurrenciesFromDataBase()
-                    _currencyList.value = CurrencyListViewState.SUCCESS(payload = result)
-                } catch (exception: Exception) {
-                    _currencyList.value = CurrencyListViewState.FAILURE()
-
-                }
-            }
-            is Mode.ONLINE -> {
-                try {
-                    val result = repository.loadAllCurrenciesFromNetwork()
-                    val list = result.rates.map { Currency(name = it.key, rate = it.value) }
-                    _currencyList.value = CurrencyListViewState.SUCCESS(payload = list)
-
-                } catch (exception: Exception) {
-                    _currencyList.value = CurrencyListViewState.FAILURE()
-
-                }
-            }
-        }
+        val result = repository.loadCurrency(mode)
+        _currencyList.value = CurrencyListViewState.SUCCESS(payload = result)
 
     }
 
-    fun insertNewCurrency(currency: Currency) = viewModelScope.launch {
-        repository.insertCurrency(currency)
+    fun insertNewCurrency(currency: Currency, mode: Mode) = viewModelScope.launch {
+        repository.insetCurrency(currency, mode)
+        val result = repository.loadCurrency(mode)
         _currencyList.value =
-            CurrencyListViewState.SUCCESS(payload = repository.loadAllCurrenciesFromDataBase())
+            CurrencyListViewState.SUCCESS(payload = result)
     }
-
-    fun navigateToCalculator(context: Context, currency: Currency) {
-        context.startActivity(Intent(context, CalculatorActivity::class.java).apply {
-            putExtra(CalculatorActivity.SELECTED_CURRENCY, currency)
-        })
-    }
-
 }
