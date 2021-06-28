@@ -1,4 +1,4 @@
-package com.example.currencycalculator.ui.currencies.activities
+package com.example.currencycalculator.ui.currencies.factory
 
 import com.example.currencycalculator.ui.currencies.models.Currency
 

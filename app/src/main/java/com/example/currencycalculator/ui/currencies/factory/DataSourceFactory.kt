@@ -1,4 +1,4 @@
-package com.example.currencycalculator.ui.currencies.activities
+package com.example.currencycalculator.ui.currencies.factory
 
 import android.content.Context
 import com.example.currencycalculator.data.local.CurrenciesRoomDatabase

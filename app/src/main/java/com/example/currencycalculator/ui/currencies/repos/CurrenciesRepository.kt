@@ -1,6 +1,6 @@
 package com.example.currencycalculator.ui.currencies.repos
 
-import com.example.currencycalculator.ui.currencies.activities.DataSourceFactory
+import com.example.currencycalculator.ui.currencies.factory.DataSourceFactory
 import com.example.currencycalculator.ui.currencies.models.Currency
 import com.example.currencycalculator.ui.currencies.viewmodels.Mode
 

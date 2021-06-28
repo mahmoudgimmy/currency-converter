@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currencycalculator.databinding.FragmentCurrenciesBinding
 import com.example.currencycalculator.ui.calculator.CalculatorActivity
-import com.example.currencycalculator.ui.currencies.activities.DataSourceFactory
+import com.example.currencycalculator.ui.currencies.factory.DataSourceFactory
 import com.example.currencycalculator.ui.currencies.adapters.CurrenciesListClicks
 import com.example.currencycalculator.ui.currencies.adapters.CurrencyAdapter
 import com.example.currencycalculator.ui.currencies.models.Currency

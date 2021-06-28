@@ -1,7 +1,7 @@
 package com.example.currencycalculator.ui.currencies.repos
 
 import com.example.currencycalculator.data.remote.CurrencyRemote
-import com.example.currencycalculator.ui.currencies.activities.DataSource
+import com.example.currencycalculator.ui.currencies.factory.DataSource
 import com.example.currencycalculator.ui.currencies.models.Currency
 
 class RemoteDataSource(private val currencyRemote: CurrencyRemote) : DataSource() {
